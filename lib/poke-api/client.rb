@@ -3,7 +3,7 @@ module Poke
     class Client
       include Logging
       attr_accessor :endpoint, :sig_loaded, :refresh_token,
-                    :lat, :lng, :alt, :http_client, :ticket
+                    :lat, :lng, :alt, :http_client, :ticket, :proxy
       attr_reader   :sig_path, :auth
 
       def initialize
@@ -14,6 +14,7 @@ module Poke
         @alt        = rand(1..9)
         @ticket     = Auth::Ticket.new
         @sig_loaded = false
+        @proxy = false
       end
 
       def login(username, password, provider)
@@ -21,7 +22,7 @@ module Poke
         raise Errors::InvalidProvider, provider unless %w(PTC GOOGLE).include?(@provider)
 
         begin
-          @auth = Auth.const_get(@provider).new(@username, @password, @refresh_token)
+          @auth = Auth.const_get(@provider).new(@username, @password, @refresh_token, @proxy)
           @auth.connect
         rescue StandardError => ex
           raise Errors::LoginFailure.new(@provider, ex)
@@ -36,7 +37,7 @@ module Poke
         raise Errors::NoRequests if @reqs.empty?
 
         check_expiry
-        req = RequestBuilder.new(@auth, [@lat, @lng, @alt], @endpoint, @http_client)
+        req = RequestBuilder.new(@auth, [@lat, @lng, @alt], @endpoint, @http_client, @proxy)
 
         begin
           resp = req.request(@reqs, self)

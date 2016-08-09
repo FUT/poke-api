@@ -13,12 +13,13 @@ module Poke
         GOOGLE_LOGIN_APP        = 'com.nianticlabs.pokemongo'.freeze
         GOOGLE_LOGIN_CLIENT_SIG = '321187995bc7cdc2b5fc91b11a96e2baa8602c62'.freeze
 
-        def initialize(username, password, refresh_token)
+        def initialize(username, password, refresh_token, proxy)
           @refresh_token = refresh_token
           @username      = username
           @password      = password
           @provider      = 'google'
           @expiry        = 0
+          @proxy    = proxy
         end
 
         def connect
