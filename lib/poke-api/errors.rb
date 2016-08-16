@@ -37,6 +37,12 @@ module Poke
         end
       end
 
+      class CheckExpiryFailure < StandardError
+        def initialize
+          super("Check expiry function failed more than 10 times in a row. The account is not valid.")
+        end
+      end
+
       class LoginFailure < StandardError
         def initialize(provider, error)
           super("Unable to login to #{provider} => [#{error} @ #{error.backtrace.first}]")

@@ -6,6 +6,8 @@ module Poke
                     :lat, :lng, :alt, :http_client, :ticket, :proxy
       attr_reader   :sig_path, :auth
 
+      MAX_CHECK_EXPIRY_ATTEMPTS_COUNT = 10
+
       def initialize
         @endpoint   = 'https://pgorelease.nianticlabs.com/plfe/rpc'
         @reqs       = []
@@ -14,6 +16,7 @@ module Poke
         @alt        = rand(1..9)
         @ticket     = Auth::Ticket.new
         @sig_loaded = false
+        @check_expiry_attempts_count = 0
         @proxy = false
       end
 
@@ -86,9 +89,14 @@ module Poke
       end
 
       def check_expiry
+        @check_expiry_attempts_count += 1
+        raise Errors::CheckExpiryFailure if @check_expiry_attempts_count > MAX_CHECK_EXPIRY_ATTEMPTS_COUNT
+
         unless @ticket.has_ticket?
           now = Helpers.fetch_time(ms: false)
 
+          logger.info "[+] Attempt #{@check_expiry_attempts_count} of #{MAX_CHECK_EXPIRY_ATTEMPTS_COUNT}"
+          logger.info "[+] Auth expiry: #{Time.at @auth.expiry}"
           if now < (@auth.expiry - 30)
             duration = format('%02d:%02d:%02d', *Helpers.format_time_diff(now, @auth.expiry, false))
             logger.info "[+] Provider access token is valid for #{duration}"
