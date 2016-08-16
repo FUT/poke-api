@@ -89,7 +89,7 @@ module Poke
         unless @ticket.has_ticket?
           now = Helpers.fetch_time(ms: false)
 
-          if now < (@auth.expiry + 30)
+          if now < (@auth.expiry - 30)
             duration = format('%02d:%02d:%02d', *Helpers.format_time_diff(now, @auth.expiry, false))
             logger.info "[+] Provider access token is valid for #{duration}"
             return
