@@ -3,10 +3,44 @@
 
 require 'google/protobuf'
 
+require_relative 'pogoprotos_networking_requests'
 require_relative 'pogoprotos_data_player'
 require_relative 'pogoprotos_inventory_item'
-require_relative 'pogoprotos_networking_requests'
 Google::Protobuf::DescriptorPool.generated_pool.build do
+  add_message "POGOProtos.Networking.Envelopes.AuthTicket" do
+    optional :start, :bytes, 1
+    optional :expire_timestamp_ms, :uint64, 2
+    optional :end, :bytes, 3
+  end
+  add_message "POGOProtos.Networking.Envelopes.RequestEnvelope" do
+    optional :status_code, :int32, 1
+    optional :request_id, :uint64, 3
+    repeated :requests, :message, 4, "POGOProtos.Networking.Requests.Request"
+    optional :unknown6, :message, 6, "POGOProtos.Networking.Envelopes.Unknown6"
+    optional :latitude, :double, 7
+    optional :longitude, :double, 8
+    optional :altitude, :double, 9
+    optional :auth_info, :message, 10, "POGOProtos.Networking.Envelopes.RequestEnvelope.AuthInfo"
+    optional :auth_ticket, :message, 11, "POGOProtos.Networking.Envelopes.AuthTicket"
+    optional :unknown12, :int64, 12
+  end
+  add_message "POGOProtos.Networking.Envelopes.RequestEnvelope.AuthInfo" do
+    optional :provider, :string, 1
+    optional :token, :message, 2, "POGOProtos.Networking.Envelopes.RequestEnvelope.AuthInfo.JWT"
+  end
+  add_message "POGOProtos.Networking.Envelopes.RequestEnvelope.AuthInfo.JWT" do
+    optional :contents, :string, 1
+    optional :unknown2, :int32, 2
+  end
+  add_message "POGOProtos.Networking.Envelopes.ResponseEnvelope" do
+    optional :status_code, :int32, 1
+    optional :request_id, :uint64, 2
+    optional :api_url, :string, 3
+    repeated :unknown6, :message, 6, "POGOProtos.Networking.Envelopes.Unknown6Response"
+    optional :auth_ticket, :message, 7, "POGOProtos.Networking.Envelopes.AuthTicket"
+    repeated :returns, :bytes, 100
+    optional :error, :string, 101
+  end
   add_message "POGOProtos.Networking.Envelopes.Signature" do
     optional :timestamp_since_start, :uint64, 2
     repeated :location_fix, :message, 4, "POGOProtos.Networking.Envelopes.Signature.LocationFix"
@@ -14,15 +48,16 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :sensor_info, :message, 7, "POGOProtos.Networking.Envelopes.Signature.SensorInfo"
     optional :device_info, :message, 8, "POGOProtos.Networking.Envelopes.Signature.DeviceInfo"
     optional :activity_status, :message, 9, "POGOProtos.Networking.Envelopes.Signature.ActivityStatus"
-    optional :location_hash1, :uint32, 10
-    optional :location_hash2, :uint32, 20
-    optional :unknown22, :bytes, 22
+    optional :location_hash1, :uint64, 10
+    optional :location_hash2, :uint64, 20
+    optional :session_hash, :bytes, 22
     optional :timestamp, :uint64, 23
     repeated :request_hash, :uint64, 24
+    optional :unknown25, :int64, 25
   end
   add_message "POGOProtos.Networking.Envelopes.Signature.LocationFix" do
     optional :provider, :string, 1
-    optional :timestamp_since_start, :uint64, 2
+    optional :timestamp_snapshot, :uint64, 2
     optional :latitude, :float, 13
     optional :longitude, :float, 14
     optional :horizontal_accuracy, :float, 20
@@ -94,20 +129,6 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "POGOProtos.Networking.Envelopes.Unknown6.Unknown2" do
     optional :encrypted_signature, :bytes, 1
   end
-  add_message "POGOProtos.Networking.Envelopes.AuthTicket" do
-    optional :start, :bytes, 1
-    optional :expire_timestamp_ms, :uint64, 2
-    optional :end, :bytes, 3
-  end
-  add_message "POGOProtos.Networking.Envelopes.ResponseEnvelope" do
-    optional :status_code, :int32, 1
-    optional :request_id, :uint64, 2
-    optional :api_url, :string, 3
-    repeated :unknown6, :message, 6, "POGOProtos.Networking.Envelopes.Unknown6Response"
-    optional :auth_ticket, :message, 7, "POGOProtos.Networking.Envelopes.AuthTicket"
-    repeated :returns, :bytes, 100
-    optional :error, :string, 101
-  end
   add_message "POGOProtos.Networking.Envelopes.Unknown6Response" do
     optional :response_type, :int32, 1
     optional :unknown2, :message, 2, "POGOProtos.Networking.Envelopes.Unknown6Response.Unknown2"
@@ -131,31 +152,16 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :key, :string, 1
     optional :value, :string, 2
   end
-  add_message "POGOProtos.Networking.Envelopes.RequestEnvelope" do
-    optional :status_code, :int32, 1
-    optional :request_id, :uint64, 3
-    repeated :requests, :message, 4, "POGOProtos.Networking.Requests.Request"
-    optional :unknown6, :message, 6, "POGOProtos.Networking.Envelopes.Unknown6"
-    optional :latitude, :double, 7
-    optional :longitude, :double, 8
-    optional :altitude, :double, 9
-    optional :auth_info, :message, 10, "POGOProtos.Networking.Envelopes.RequestEnvelope.AuthInfo"
-    optional :auth_ticket, :message, 11, "POGOProtos.Networking.Envelopes.AuthTicket"
-    optional :unknown12, :int64, 12
-  end
-  add_message "POGOProtos.Networking.Envelopes.RequestEnvelope.AuthInfo" do
-    optional :provider, :string, 1
-    optional :token, :message, 2, "POGOProtos.Networking.Envelopes.RequestEnvelope.AuthInfo.JWT"
-  end
-  add_message "POGOProtos.Networking.Envelopes.RequestEnvelope.AuthInfo.JWT" do
-    optional :contents, :string, 1
-    optional :unknown2, :int32, 2
-  end
 end
 
 module POGOProtos
   module Networking
     module Envelopes
+      AuthTicket = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Networking.Envelopes.AuthTicket").msgclass
+      RequestEnvelope = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Networking.Envelopes.RequestEnvelope").msgclass
+      RequestEnvelope::AuthInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Networking.Envelopes.RequestEnvelope.AuthInfo").msgclass
+      RequestEnvelope::AuthInfo::JWT = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Networking.Envelopes.RequestEnvelope.AuthInfo.JWT").msgclass
+      ResponseEnvelope = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Networking.Envelopes.ResponseEnvelope").msgclass
       Signature = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Networking.Envelopes.Signature").msgclass
       Signature::LocationFix = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Networking.Envelopes.Signature.LocationFix").msgclass
       Signature::AndroidGpsInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Networking.Envelopes.Signature.AndroidGpsInfo").msgclass
@@ -164,15 +170,10 @@ module POGOProtos
       Signature::ActivityStatus = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Networking.Envelopes.Signature.ActivityStatus").msgclass
       Unknown6 = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Networking.Envelopes.Unknown6").msgclass
       Unknown6::Unknown2 = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Networking.Envelopes.Unknown6.Unknown2").msgclass
-      AuthTicket = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Networking.Envelopes.AuthTicket").msgclass
-      ResponseEnvelope = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Networking.Envelopes.ResponseEnvelope").msgclass
       Unknown6Response = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Networking.Envelopes.Unknown6Response").msgclass
       Unknown6Response::Unknown2 = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Networking.Envelopes.Unknown6Response.Unknown2").msgclass
       Unknown6Response::Unknown2::StoreItem = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Networking.Envelopes.Unknown6Response.Unknown2.StoreItem").msgclass
       Unknown6Response::Unknown2::StoreItem::Tag = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Networking.Envelopes.Unknown6Response.Unknown2.StoreItem.Tag").msgclass
-      RequestEnvelope = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Networking.Envelopes.RequestEnvelope").msgclass
-      RequestEnvelope::AuthInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Networking.Envelopes.RequestEnvelope.AuthInfo").msgclass
-      RequestEnvelope::AuthInfo::JWT = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Networking.Envelopes.RequestEnvelope.AuthInfo.JWT").msgclass
     end
   end
 end

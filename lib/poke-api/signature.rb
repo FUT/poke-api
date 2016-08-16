@@ -34,7 +34,7 @@ module Poke
         signature = POGOProtos::Networking::Envelopes::Signature.new(
           location_hash1: Helpers.generate_location_one(req.auth_ticket.to_proto, client.position),
           location_hash2: Helpers.generate_location_two(client.position),
-          unknown22: SecureRandom.random_bytes(32),
+          session_hash: SecureRandom.random_bytes(32),
           timestamp: Helpers.fetch_time,
           timestamp_since_start: Helpers.fetch_time - client.start_time
         )

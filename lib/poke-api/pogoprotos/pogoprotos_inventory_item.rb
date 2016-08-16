@@ -13,21 +13,6 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :count, :int32, 2
     optional :unseen, :bool, 3
   end
-  add_enum "POGOProtos.Inventory.Item.ItemType" do
-    value :ITEM_TYPE_NONE, 0
-    value :ITEM_TYPE_POKEBALL, 1
-    value :ITEM_TYPE_POTION, 2
-    value :ITEM_TYPE_REVIVE, 3
-    value :ITEM_TYPE_MAP, 4
-    value :ITEM_TYPE_BATTLE, 5
-    value :ITEM_TYPE_FOOD, 6
-    value :ITEM_TYPE_CAMERA, 7
-    value :ITEM_TYPE_DISK, 8
-    value :ITEM_TYPE_INCUBATOR, 9
-    value :ITEM_TYPE_INCENSE, 10
-    value :ITEM_TYPE_XP_BOOST, 11
-    value :ITEM_TYPE_INVENTORY_UPGRADE, 12
-  end
   add_enum "POGOProtos.Inventory.Item.ItemId" do
     value :ITEM_UNKNOWN, 0
     value :ITEM_POKE_BALL, 1
@@ -60,6 +45,21 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :ITEM_POKEMON_STORAGE_UPGRADE, 1001
     value :ITEM_ITEM_STORAGE_UPGRADE, 1002
   end
+  add_enum "POGOProtos.Inventory.Item.ItemType" do
+    value :ITEM_TYPE_NONE, 0
+    value :ITEM_TYPE_POKEBALL, 1
+    value :ITEM_TYPE_POTION, 2
+    value :ITEM_TYPE_REVIVE, 3
+    value :ITEM_TYPE_MAP, 4
+    value :ITEM_TYPE_BATTLE, 5
+    value :ITEM_TYPE_FOOD, 6
+    value :ITEM_TYPE_CAMERA, 7
+    value :ITEM_TYPE_DISK, 8
+    value :ITEM_TYPE_INCUBATOR, 9
+    value :ITEM_TYPE_INCENSE, 10
+    value :ITEM_TYPE_XP_BOOST, 11
+    value :ITEM_TYPE_INVENTORY_UPGRADE, 12
+  end
 end
 
 module POGOProtos
@@ -67,8 +67,8 @@ module POGOProtos
     module Item
       ItemAward = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Inventory.Item.ItemAward").msgclass
       ItemData = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Inventory.Item.ItemData").msgclass
-      ItemType = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Inventory.Item.ItemType").enummodule
       ItemId = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Inventory.Item.ItemId").enummodule
+      ItemType = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Inventory.Item.ItemType").enummodule
     end
   end
 end

@@ -4,14 +4,8 @@
 require 'google/protobuf'
 
 Google::Protobuf::DescriptorPool.generated_pool.build do
-  add_message "POGOProtos.Settings.MapSettings" do
-    optional :pokemon_visible_range, :double, 1
-    optional :poke_nav_range_meters, :double, 2
-    optional :encounter_range_meters, :double, 3
-    optional :get_map_objects_min_refresh_seconds, :float, 4
-    optional :get_map_objects_max_refresh_seconds, :float, 5
-    optional :get_map_objects_min_distance_meters, :float, 6
-    optional :google_maps_api_key, :string, 7
+  add_message "POGOProtos.Settings.DownloadSettingsAction" do
+    optional :hash, :string, 1
   end
   add_message "POGOProtos.Settings.FortSettings" do
     optional :interaction_range_meters, :double, 1
@@ -27,6 +21,13 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :level_settings, :message, 4, "POGOProtos.Settings.LevelSettings"
     optional :inventory_settings, :message, 5, "POGOProtos.Settings.InventorySettings"
     optional :minimum_client_version, :string, 6
+    optional :gps_settings, :message, 7, "POGOProtos.Settings.GpsSettings"
+  end
+  add_message "POGOProtos.Settings.GpsSettings" do
+    optional :driving_warning_speed_meters_per_second, :float, 1
+    optional :driving_warning_cooldown_minutes, :float, 2
+    optional :driving_speed_sample_interval_seconds, :float, 3
+    optional :driving_speed_sample_count, :int32, 4
   end
   add_message "POGOProtos.Settings.InventorySettings" do
     optional :max_pokemon, :int32, 1
@@ -39,18 +40,25 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :trainer_cp_modifier, :double, 2
     optional :trainer_difficulty_modifier, :double, 3
   end
-  add_message "POGOProtos.Settings.DownloadSettingsAction" do
-    optional :hash, :string, 1
+  add_message "POGOProtos.Settings.MapSettings" do
+    optional :pokemon_visible_range, :double, 1
+    optional :poke_nav_range_meters, :double, 2
+    optional :encounter_range_meters, :double, 3
+    optional :get_map_objects_min_refresh_seconds, :float, 4
+    optional :get_map_objects_max_refresh_seconds, :float, 5
+    optional :get_map_objects_min_distance_meters, :float, 6
+    optional :google_maps_api_key, :string, 7
   end
 end
 
 module POGOProtos
   module Settings
-    MapSettings = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Settings.MapSettings").msgclass
+    DownloadSettingsAction = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Settings.DownloadSettingsAction").msgclass
     FortSettings = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Settings.FortSettings").msgclass
     GlobalSettings = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Settings.GlobalSettings").msgclass
+    GpsSettings = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Settings.GpsSettings").msgclass
     InventorySettings = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Settings.InventorySettings").msgclass
     LevelSettings = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Settings.LevelSettings").msgclass
-    DownloadSettingsAction = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Settings.DownloadSettingsAction").msgclass
+    MapSettings = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Settings.MapSettings").msgclass
   end
 end

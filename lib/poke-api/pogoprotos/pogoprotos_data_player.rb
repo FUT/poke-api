@@ -5,16 +5,44 @@ require 'google/protobuf'
 
 require_relative 'pogoprotos_enums'
 Google::Protobuf::DescriptorPool.generated_pool.build do
+  add_message "POGOProtos.Data.Player.ContactSettings" do
+    optional :send_marketing_emails, :bool, 1
+    optional :send_push_notifications, :bool, 2
+  end
   add_message "POGOProtos.Data.Player.Currency" do
     optional :name, :string, 1
     optional :amount, :int32, 2
   end
-  add_message "POGOProtos.Data.Player.PlayerCurrency" do
-    optional :gems, :int32, 1
-  end
   add_message "POGOProtos.Data.Player.DailyBonus" do
     optional :next_collected_timestamp_ms, :int64, 1
     optional :next_defender_bonus_collect_timestamp_ms, :int64, 2
+  end
+  add_message "POGOProtos.Data.Player.EquippedBadge" do
+    optional :badge_type, :enum, 1, "POGOProtos.Enums.BadgeType"
+    optional :level, :int32, 2
+    optional :next_equip_change_allowed_timestamp_ms, :int64, 3
+  end
+  add_message "POGOProtos.Data.Player.PlayerAvatar" do
+    optional :skin, :int32, 2
+    optional :hair, :int32, 3
+    optional :shirt, :int32, 4
+    optional :pants, :int32, 5
+    optional :hat, :int32, 6
+    optional :shoes, :int32, 7
+    optional :gender, :enum, 8, "POGOProtos.Enums.Gender"
+    optional :eyes, :int32, 9
+    optional :backpack, :int32, 10
+  end
+  add_message "POGOProtos.Data.Player.PlayerCamera" do
+    optional :is_default_camera, :bool, 1
+  end
+  add_message "POGOProtos.Data.Player.PlayerCurrency" do
+    optional :gems, :int32, 1
+  end
+  add_message "POGOProtos.Data.Player.PlayerPublicProfile" do
+    optional :name, :string, 1
+    optional :level, :int32, 2
+    optional :avatar, :message, 3, "POGOProtos.Data.Player.PlayerAvatar"
   end
   add_message "POGOProtos.Data.Player.PlayerStats" do
     optional :level, :int32, 1
@@ -41,48 +69,20 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :pokemon_caught_by_type, :bytes, 22
     optional :small_rattata_caught, :int32, 23
   end
-  add_message "POGOProtos.Data.Player.ContactSettings" do
-    optional :send_marketing_emails, :bool, 1
-    optional :send_push_notifications, :bool, 2
-  end
-  add_message "POGOProtos.Data.Player.PlayerCamera" do
-    optional :is_default_camera, :bool, 1
-  end
-  add_message "POGOProtos.Data.Player.PlayerAvatar" do
-    optional :skin, :int32, 2
-    optional :hair, :int32, 3
-    optional :shirt, :int32, 4
-    optional :pants, :int32, 5
-    optional :hat, :int32, 6
-    optional :shoes, :int32, 7
-    optional :gender, :enum, 8, "POGOProtos.Enums.Gender"
-    optional :eyes, :int32, 9
-    optional :backpack, :int32, 10
-  end
-  add_message "POGOProtos.Data.Player.EquippedBadge" do
-    optional :badge_type, :enum, 1, "POGOProtos.Enums.BadgeType"
-    optional :level, :int32, 2
-    optional :next_equip_change_allowed_timestamp_ms, :int64, 3
-  end
-  add_message "POGOProtos.Data.Player.PlayerPublicProfile" do
-    optional :name, :string, 1
-    optional :level, :int32, 2
-    optional :avatar, :message, 3, "POGOProtos.Data.Player.PlayerAvatar"
-  end
 end
 
 module POGOProtos
   module Data
     module Player
-      Currency = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Data.Player.Currency").msgclass
-      PlayerCurrency = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Data.Player.PlayerCurrency").msgclass
-      DailyBonus = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Data.Player.DailyBonus").msgclass
-      PlayerStats = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Data.Player.PlayerStats").msgclass
       ContactSettings = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Data.Player.ContactSettings").msgclass
-      PlayerCamera = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Data.Player.PlayerCamera").msgclass
-      PlayerAvatar = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Data.Player.PlayerAvatar").msgclass
+      Currency = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Data.Player.Currency").msgclass
+      DailyBonus = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Data.Player.DailyBonus").msgclass
       EquippedBadge = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Data.Player.EquippedBadge").msgclass
+      PlayerAvatar = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Data.Player.PlayerAvatar").msgclass
+      PlayerCamera = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Data.Player.PlayerCamera").msgclass
+      PlayerCurrency = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Data.Player.PlayerCurrency").msgclass
       PlayerPublicProfile = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Data.Player.PlayerPublicProfile").msgclass
+      PlayerStats = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Data.Player.PlayerStats").msgclass
     end
   end
 end

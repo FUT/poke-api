@@ -3,28 +3,10 @@
 
 require 'google/protobuf'
 
-require_relative 'pogoprotos_data'
 require_relative 'pogoprotos_data_player'
+require_relative 'pogoprotos_data'
 require_relative 'pogoprotos_data_gym'
 Google::Protobuf::DescriptorPool.generated_pool.build do
-  add_message "POGOProtos.Data.Battle.BattlePokemonInfo" do
-    optional :pokemon_data, :message, 1, "POGOProtos.Data.PokemonData"
-    optional :current_health, :int32, 2
-    optional :current_energy, :int32, 3
-  end
-  add_message "POGOProtos.Data.Battle.BattleParticipant" do
-    optional :active_pokemon, :message, 1, "POGOProtos.Data.Battle.BattlePokemonInfo"
-    optional :trainer_public_profile, :message, 2, "POGOProtos.Data.Player.PlayerPublicProfile"
-    repeated :reverse_pokemon, :message, 3, "POGOProtos.Data.Battle.BattlePokemonInfo"
-    repeated :defeated_pokemon, :message, 4, "POGOProtos.Data.Battle.BattlePokemonInfo"
-  end
-  add_message "POGOProtos.Data.Battle.BattleResults" do
-    optional :gym_state, :message, 1, "POGOProtos.Data.Gym.GymState"
-    repeated :attackers, :message, 2, "POGOProtos.Data.Battle.BattleParticipant"
-    repeated :player_experience_awarded, :int32, 3
-    optional :next_defender_pokemon_id, :int64, 4
-    optional :gym_points_delta, :int32, 5
-  end
   add_message "POGOProtos.Data.Battle.BattleAction" do
     optional :Type, :enum, 1, "POGOProtos.Data.Battle.BattleActionType"
     optional :action_start_ms, :int64, 2
@@ -48,17 +30,23 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :battle_start_timestamp_ms, :int64, 5
     optional :battle_end_timestamp_ms, :int64, 6
   end
-  add_enum "POGOProtos.Data.Battle.BattleType" do
-    value :BATTLE_TYPE_UNSET, 0
-    value :BATTLE_TYPE_NORMAL, 1
-    value :BATTLE_TYPE_TRAINING, 2
+  add_message "POGOProtos.Data.Battle.BattleParticipant" do
+    optional :active_pokemon, :message, 1, "POGOProtos.Data.Battle.BattlePokemonInfo"
+    optional :trainer_public_profile, :message, 2, "POGOProtos.Data.Player.PlayerPublicProfile"
+    repeated :reverse_pokemon, :message, 3, "POGOProtos.Data.Battle.BattlePokemonInfo"
+    repeated :defeated_pokemon, :message, 4, "POGOProtos.Data.Battle.BattlePokemonInfo"
   end
-  add_enum "POGOProtos.Data.Battle.BattleState" do
-    value :STATE_UNSET, 0
-    value :ACTIVE, 1
-    value :VICTORY, 2
-    value :DEFEATED, 3
-    value :TIMED_OUT, 4
+  add_message "POGOProtos.Data.Battle.BattlePokemonInfo" do
+    optional :pokemon_data, :message, 1, "POGOProtos.Data.PokemonData"
+    optional :current_health, :int32, 2
+    optional :current_energy, :int32, 3
+  end
+  add_message "POGOProtos.Data.Battle.BattleResults" do
+    optional :gym_state, :message, 1, "POGOProtos.Data.Gym.GymState"
+    repeated :attackers, :message, 2, "POGOProtos.Data.Battle.BattleParticipant"
+    repeated :player_experience_awarded, :int32, 3
+    optional :next_defender_pokemon_id, :int64, 4
+    optional :gym_points_delta, :int32, 5
   end
   add_enum "POGOProtos.Data.Battle.BattleActionType" do
     value :ACTION_UNSET, 0
@@ -73,19 +61,31 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :ACTION_DEFEAT, 9
     value :ACTION_TIMED_OUT, 10
   end
+  add_enum "POGOProtos.Data.Battle.BattleState" do
+    value :STATE_UNSET, 0
+    value :ACTIVE, 1
+    value :VICTORY, 2
+    value :DEFEATED, 3
+    value :TIMED_OUT, 4
+  end
+  add_enum "POGOProtos.Data.Battle.BattleType" do
+    value :BATTLE_TYPE_UNSET, 0
+    value :BATTLE_TYPE_NORMAL, 1
+    value :BATTLE_TYPE_TRAINING, 2
+  end
 end
 
 module POGOProtos
   module Data
     module Battle
-      BattlePokemonInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Data.Battle.BattlePokemonInfo").msgclass
-      BattleParticipant = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Data.Battle.BattleParticipant").msgclass
-      BattleResults = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Data.Battle.BattleResults").msgclass
       BattleAction = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Data.Battle.BattleAction").msgclass
       BattleLog = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Data.Battle.BattleLog").msgclass
-      BattleType = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Data.Battle.BattleType").enummodule
-      BattleState = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Data.Battle.BattleState").enummodule
+      BattleParticipant = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Data.Battle.BattleParticipant").msgclass
+      BattlePokemonInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Data.Battle.BattlePokemonInfo").msgclass
+      BattleResults = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Data.Battle.BattleResults").msgclass
       BattleActionType = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Data.Battle.BattleActionType").enummodule
+      BattleState = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Data.Battle.BattleState").enummodule
+      BattleType = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Data.Battle.BattleType").enummodule
     end
   end
 end

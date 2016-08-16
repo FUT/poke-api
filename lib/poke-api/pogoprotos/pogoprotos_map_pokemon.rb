@@ -3,9 +3,24 @@
 
 require 'google/protobuf'
 
-require_relative 'pogoprotos_data'
 require_relative 'pogoprotos_enums'
+require_relative 'pogoprotos_data'
 Google::Protobuf::DescriptorPool.generated_pool.build do
+  add_message "POGOProtos.Map.Pokemon.MapPokemon" do
+    optional :spawn_point_id, :string, 1
+    optional :encounter_id, :fixed64, 2
+    optional :pokemon_id, :enum, 3, "POGOProtos.Enums.PokemonId"
+    optional :expiration_timestamp_ms, :int64, 4
+    optional :latitude, :double, 5
+    optional :longitude, :double, 6
+  end
+  add_message "POGOProtos.Map.Pokemon.NearbyPokemon" do
+    optional :pokemon_id, :enum, 1, "POGOProtos.Enums.PokemonId"
+    optional :distance_in_meters, :float, 2
+    optional :encounter_id, :fixed64, 3
+    optional :fort_id, :string, 4
+    optional :fort_image_url, :string, 5
+  end
   add_message "POGOProtos.Map.Pokemon.WildPokemon" do
     optional :encounter_id, :fixed64, 1
     optional :last_modified_timestamp_ms, :int64, 2
@@ -15,27 +30,14 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :pokemon_data, :message, 7, "POGOProtos.Data.PokemonData"
     optional :time_till_hidden_ms, :int32, 11
   end
-  add_message "POGOProtos.Map.Pokemon.NearbyPokemon" do
-    optional :pokemon_id, :enum, 1, "POGOProtos.Enums.PokemonId"
-    optional :distance_in_meters, :float, 2
-    optional :encounter_id, :fixed64, 3
-  end
-  add_message "POGOProtos.Map.Pokemon.MapPokemon" do
-    optional :spawn_point_id, :string, 1
-    optional :encounter_id, :fixed64, 2
-    optional :pokemon_id, :enum, 3, "POGOProtos.Enums.PokemonId"
-    optional :expiration_timestamp_ms, :int64, 4
-    optional :latitude, :double, 5
-    optional :longitude, :double, 6
-  end
 end
 
 module POGOProtos
   module Map
     module Pokemon
-      WildPokemon = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Map.Pokemon.WildPokemon").msgclass
-      NearbyPokemon = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Map.Pokemon.NearbyPokemon").msgclass
       MapPokemon = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Map.Pokemon.MapPokemon").msgclass
+      NearbyPokemon = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Map.Pokemon.NearbyPokemon").msgclass
+      WildPokemon = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Map.Pokemon.WildPokemon").msgclass
     end
   end
 end

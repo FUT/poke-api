@@ -4,9 +4,51 @@
 require 'google/protobuf'
 
 require_relative 'pogoprotos_enums'
-require_relative 'pogoprotos_inventory_item'
 require_relative 'pogoprotos_data_player'
+require_relative 'pogoprotos_inventory_item'
 Google::Protobuf::DescriptorPool.generated_pool.build do
+  add_message "POGOProtos.Data.AssetDigestEntry" do
+    optional :asset_id, :string, 1
+    optional :bundle_name, :string, 2
+    optional :version, :int64, 3
+    optional :checksum, :fixed32, 4
+    optional :size, :int32, 5
+    optional :key, :bytes, 6
+  end
+  add_message "POGOProtos.Data.DownloadUrlEntry" do
+    optional :asset_id, :string, 1
+    optional :url, :string, 2
+    optional :size, :int32, 3
+    optional :checksum, :fixed32, 4
+  end
+  add_message "POGOProtos.Data.PlayerBadge" do
+    optional :badge_type, :enum, 1, "POGOProtos.Enums.BadgeType"
+    optional :rank, :int32, 2
+    optional :start_value, :int32, 3
+    optional :end_value, :int32, 4
+    optional :current_value, :double, 5
+  end
+  add_message "POGOProtos.Data.PlayerData" do
+    optional :creation_timestamp_ms, :int64, 1
+    optional :username, :string, 2
+    optional :team, :enum, 5, "POGOProtos.Enums.TeamColor"
+    repeated :tutorial_state, :enum, 7, "POGOProtos.Enums.TutorialState"
+    optional :avatar, :message, 8, "POGOProtos.Data.Player.PlayerAvatar"
+    optional :max_pokemon_storage, :int32, 9
+    optional :max_item_storage, :int32, 10
+    optional :daily_bonus, :message, 11, "POGOProtos.Data.Player.DailyBonus"
+    optional :equipped_badge, :message, 12, "POGOProtos.Data.Player.EquippedBadge"
+    optional :contact_settings, :message, 13, "POGOProtos.Data.Player.ContactSettings"
+    repeated :currencies, :message, 14, "POGOProtos.Data.Player.Currency"
+    optional :remaining_codename_claims, :int32, 15
+  end
+  add_message "POGOProtos.Data.PokedexEntry" do
+    optional :pokemon_id, :enum, 1, "POGOProtos.Enums.PokemonId"
+    optional :times_encountered, :int32, 2
+    optional :times_captured, :int32, 3
+    optional :evolution_stone_pieces, :int32, 4
+    optional :evolution_stones, :int32, 5
+  end
   add_message "POGOProtos.Data.PokemonData" do
     optional :id, :fixed64, 1
     optional :pokemon_id, :enum, 2, "POGOProtos.Enums.PokemonId"
@@ -39,56 +81,15 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :nickname, :string, 30
     optional :from_fort, :int32, 31
   end
-  add_message "POGOProtos.Data.PlayerData" do
-    optional :creation_timestamp_ms, :int64, 1
-    optional :username, :string, 2
-    optional :team, :enum, 5, "POGOProtos.Enums.TeamColor"
-    repeated :tutorial_state, :enum, 7, "POGOProtos.Enums.TutorialState"
-    optional :avatar, :message, 8, "POGOProtos.Data.Player.PlayerAvatar"
-    optional :max_pokemon_storage, :int32, 9
-    optional :max_item_storage, :int32, 10
-    optional :daily_bonus, :message, 11, "POGOProtos.Data.Player.DailyBonus"
-    optional :equipped_badge, :message, 12, "POGOProtos.Data.Player.EquippedBadge"
-    optional :contact_settings, :message, 13, "POGOProtos.Data.Player.ContactSettings"
-    repeated :currencies, :message, 14, "POGOProtos.Data.Player.Currency"
-  end
-  add_message "POGOProtos.Data.AssetDigestEntry" do
-    optional :asset_id, :string, 1
-    optional :bundle_name, :string, 2
-    optional :version, :int64, 3
-    optional :checksum, :fixed32, 4
-    optional :size, :int32, 5
-    optional :key, :bytes, 6
-  end
-  add_message "POGOProtos.Data.PokedexEntry" do
-    optional :pokemon_id, :enum, 1, "POGOProtos.Enums.PokemonId"
-    optional :times_encountered, :int32, 2
-    optional :times_captured, :int32, 3
-    optional :evolution_stone_pieces, :int32, 4
-    optional :evolution_stones, :int32, 5
-  end
-  add_message "POGOProtos.Data.DownloadUrlEntry" do
-    optional :asset_id, :string, 1
-    optional :url, :string, 2
-    optional :size, :int32, 3
-    optional :checksum, :fixed32, 4
-  end
-  add_message "POGOProtos.Data.PlayerBadge" do
-    optional :badge_type, :enum, 1, "POGOProtos.Enums.BadgeType"
-    optional :rank, :int32, 2
-    optional :start_value, :int32, 3
-    optional :end_value, :int32, 4
-    optional :current_value, :double, 5
-  end
 end
 
 module POGOProtos
   module Data
-    PokemonData = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Data.PokemonData").msgclass
-    PlayerData = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Data.PlayerData").msgclass
     AssetDigestEntry = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Data.AssetDigestEntry").msgclass
-    PokedexEntry = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Data.PokedexEntry").msgclass
     DownloadUrlEntry = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Data.DownloadUrlEntry").msgclass
     PlayerBadge = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Data.PlayerBadge").msgclass
+    PlayerData = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Data.PlayerData").msgclass
+    PokedexEntry = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Data.PokedexEntry").msgclass
+    PokemonData = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Data.PokemonData").msgclass
   end
 end

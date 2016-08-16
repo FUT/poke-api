@@ -4,117 +4,14 @@
 require 'google/protobuf'
 
 require_relative 'pogoprotos_enums'
-require_relative 'pogoprotos_settings_master_pokemon'
 require_relative 'pogoprotos_inventory_item'
 require_relative 'pogoprotos_settings_master_item'
+require_relative 'pogoprotos_settings_master_pokemon'
 Google::Protobuf::DescriptorPool.generated_pool.build do
-  add_message "POGOProtos.Settings.Master.IapSettings" do
-    optional :daily_bonus_coins, :int32, 1
-    repeated :daily_defender_bonus_per_pokemon, :int32, 2
-    optional :daily_defender_bonus_max_defenders, :int32, 3
-    repeated :daily_defender_bonus_currency, :string, 4
-    optional :min_time_between_claims_ms, :int64, 5
-    optional :daily_bonus_enabled, :bool, 6
-    optional :daily_defender_bonus_enabled, :bool, 7
-  end
-  add_message "POGOProtos.Settings.Master.EquippedBadgeSettings" do
-    optional :equip_badge_cooldown_ms, :int64, 1
-    repeated :catch_probability_bonus, :float, 2
-    repeated :flee_probability_bonus, :float, 3
-  end
-  add_message "POGOProtos.Settings.Master.GymLevelSettings" do
-    repeated :required_experience, :int32, 1
-    repeated :leader_slots, :int32, 2
-    repeated :trainer_slots, :int32, 3
-    repeated :search_roll_bonus, :int32, 4
-  end
-  add_message "POGOProtos.Settings.Master.TypeEffectiveSettings" do
-    repeated :attack_scalar, :float, 1
-    optional :attack_type, :enum, 2, "POGOProtos.Enums.PokemonType"
-  end
-  add_message "POGOProtos.Settings.Master.PokemonSettings" do
-    optional :pokemon_id, :enum, 1, "POGOProtos.Enums.PokemonId"
-    optional :model_scale, :float, 3
-    optional :type, :enum, 4, "POGOProtos.Enums.PokemonType"
-    optional :type_2, :enum, 5, "POGOProtos.Enums.PokemonType"
-    optional :camera, :message, 6, "POGOProtos.Settings.Master.Pokemon.CameraAttributes"
-    optional :encounter, :message, 7, "POGOProtos.Settings.Master.Pokemon.EncounterAttributes"
-    optional :stats, :message, 8, "POGOProtos.Settings.Master.Pokemon.StatsAttributes"
-    repeated :quick_moves, :enum, 9, "POGOProtos.Enums.PokemonMove"
-    repeated :cinematic_moves, :enum, 10, "POGOProtos.Enums.PokemonMove"
-    repeated :animation_time, :float, 11
-    repeated :evolution_ids, :enum, 12, "POGOProtos.Enums.PokemonId"
-    optional :evolution_pips, :int32, 13
-    optional :rarity, :enum, 14, "POGOProtos.Enums.PokemonRarity"
-    optional :pokedex_height_m, :float, 15
-    optional :pokedex_weight_kg, :float, 16
-    optional :parent_pokemon_id, :enum, 17, "POGOProtos.Enums.PokemonId"
-    optional :height_std_dev, :float, 18
-    optional :weight_std_dev, :float, 19
-    optional :km_distance_to_hatch, :float, 20
-    optional :family_id, :enum, 21, "POGOProtos.Enums.PokemonFamilyId"
-    optional :candy_to_evolve, :int32, 22
-  end
-  add_message "POGOProtos.Settings.Master.GymBattleSettings" do
-    optional :energy_per_sec, :float, 1
-    optional :dodge_energy_cost, :float, 2
-    optional :retarget_seconds, :float, 3
-    optional :enemy_attack_interval, :float, 4
-    optional :attack_server_interval, :float, 5
-    optional :round_duration_seconds, :float, 6
-    optional :bonus_time_per_ally_seconds, :float, 7
-    optional :maximum_attackers_per_battle, :int32, 8
-    optional :same_type_attack_bonus_multiplier, :float, 9
-    optional :maximum_energy, :int32, 10
-    optional :energy_delta_per_health_lost, :float, 11
-    optional :dodge_duration_ms, :int32, 12
-    optional :minimum_player_level, :int32, 13
-    optional :swap_duration_ms, :int32, 14
-  end
-  add_message "POGOProtos.Settings.Master.MoveSettings" do
-    optional :movement_id, :enum, 1, "POGOProtos.Enums.PokemonMove"
-    optional :animation_id, :int32, 2
-    optional :pokemon_type, :enum, 3, "POGOProtos.Enums.PokemonType"
-    optional :power, :float, 4
-    optional :accuracy_chance, :float, 5
-    optional :critical_chance, :float, 6
-    optional :heal_scalar, :float, 7
-    optional :stamina_loss_scalar, :float, 8
-    optional :trainer_level_min, :int32, 9
-    optional :trainer_level_max, :int32, 10
-    optional :vfx_name, :string, 11
-    optional :duration_ms, :int32, 12
-    optional :damage_window_start_ms, :int32, 13
-    optional :damage_window_end_ms, :int32, 14
-    optional :energy_delta, :int32, 15
-  end
-  add_message "POGOProtos.Settings.Master.PokemonUpgradeSettings" do
-    optional :upgrades_per_level, :int32, 1
-    optional :allowed_levels_above_player, :int32, 2
-    repeated :candy_cost, :int32, 3
-    repeated :stardust_cost, :int32, 4
-  end
   add_message "POGOProtos.Settings.Master.BadgeSettings" do
     optional :badge_type, :enum, 1, "POGOProtos.Enums.BadgeType"
     optional :badge_rank, :int32, 2
     repeated :targets, :int32, 3
-  end
-  add_message "POGOProtos.Settings.Master.PlayerLevelSettings" do
-    repeated :rank_num, :int32, 1
-    repeated :required_experience, :int32, 2
-    repeated :cp_multiplier, :float, 3
-    optional :max_egg_player_level, :int32, 4
-    optional :max_encounter_player_level, :int32, 5
-  end
-  add_message "POGOProtos.Settings.Master.MoveSequenceSettings" do
-    repeated :sequence, :string, 1
-  end
-  add_message "POGOProtos.Settings.Master.IapItemDisplay" do
-    optional :sku, :string, 1
-    optional :category, :enum, 2, "POGOProtos.Enums.HoloIapItemCategory"
-    optional :sort_order, :int32, 3
-    repeated :item_ids, :enum, 4, "POGOProtos.Inventory.Item.ItemId"
-    repeated :counts, :int32, 5
   end
   add_message "POGOProtos.Settings.Master.CameraSettings" do
     optional :next_camera, :string, 1
@@ -141,6 +38,50 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :nice_throw_threshold, :float, 4
     optional :milestone_threshold, :int32, 5
   end
+  add_message "POGOProtos.Settings.Master.EquippedBadgeSettings" do
+    optional :equip_badge_cooldown_ms, :int64, 1
+    repeated :catch_probability_bonus, :float, 2
+    repeated :flee_probability_bonus, :float, 3
+  end
+  add_message "POGOProtos.Settings.Master.GymBattleSettings" do
+    optional :energy_per_sec, :float, 1
+    optional :dodge_energy_cost, :float, 2
+    optional :retarget_seconds, :float, 3
+    optional :enemy_attack_interval, :float, 4
+    optional :attack_server_interval, :float, 5
+    optional :round_duration_seconds, :float, 6
+    optional :bonus_time_per_ally_seconds, :float, 7
+    optional :maximum_attackers_per_battle, :int32, 8
+    optional :same_type_attack_bonus_multiplier, :float, 9
+    optional :maximum_energy, :int32, 10
+    optional :energy_delta_per_health_lost, :float, 11
+    optional :dodge_duration_ms, :int32, 12
+    optional :minimum_player_level, :int32, 13
+    optional :swap_duration_ms, :int32, 14
+    optional :dodge_damage_reduction_percent, :float, 15
+  end
+  add_message "POGOProtos.Settings.Master.GymLevelSettings" do
+    repeated :required_experience, :int32, 1
+    repeated :leader_slots, :int32, 2
+    repeated :trainer_slots, :int32, 3
+    repeated :search_roll_bonus, :int32, 4
+  end
+  add_message "POGOProtos.Settings.Master.IapItemDisplay" do
+    optional :sku, :string, 1
+    optional :category, :enum, 2, "POGOProtos.Enums.HoloIapItemCategory"
+    optional :sort_order, :int32, 3
+    repeated :item_ids, :enum, 4, "POGOProtos.Inventory.Item.ItemId"
+    repeated :counts, :int32, 5
+  end
+  add_message "POGOProtos.Settings.Master.IapSettings" do
+    optional :daily_bonus_coins, :int32, 1
+    repeated :daily_defender_bonus_per_pokemon, :int32, 2
+    optional :daily_defender_bonus_max_defenders, :int32, 3
+    repeated :daily_defender_bonus_currency, :string, 4
+    optional :min_time_between_claims_ms, :int64, 5
+    optional :daily_bonus_enabled, :bool, 6
+    optional :daily_defender_bonus_enabled, :bool, 7
+  end
   add_message "POGOProtos.Settings.Master.ItemSettings" do
     optional :item_id, :enum, 1, "POGOProtos.Inventory.Item.ItemId"
     optional :item_type, :enum, 2, "POGOProtos.Inventory.Item.ItemType"
@@ -158,26 +99,86 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :egg_incubator, :message, 14, "POGOProtos.Settings.Master.Item.EggIncubatorAttributes"
     optional :fort_modifier, :message, 15, "POGOProtos.Settings.Master.Item.FortModifierAttributes"
   end
+  add_message "POGOProtos.Settings.Master.MoveSequenceSettings" do
+    repeated :sequence, :string, 1
+  end
+  add_message "POGOProtos.Settings.Master.MoveSettings" do
+    optional :movement_id, :enum, 1, "POGOProtos.Enums.PokemonMove"
+    optional :animation_id, :int32, 2
+    optional :pokemon_type, :enum, 3, "POGOProtos.Enums.PokemonType"
+    optional :power, :float, 4
+    optional :accuracy_chance, :float, 5
+    optional :critical_chance, :float, 6
+    optional :heal_scalar, :float, 7
+    optional :stamina_loss_scalar, :float, 8
+    optional :trainer_level_min, :int32, 9
+    optional :trainer_level_max, :int32, 10
+    optional :vfx_name, :string, 11
+    optional :duration_ms, :int32, 12
+    optional :damage_window_start_ms, :int32, 13
+    optional :damage_window_end_ms, :int32, 14
+    optional :energy_delta, :int32, 15
+  end
+  add_message "POGOProtos.Settings.Master.PlayerLevelSettings" do
+    repeated :rank_num, :int32, 1
+    repeated :required_experience, :int32, 2
+    repeated :cp_multiplier, :float, 3
+    optional :max_egg_player_level, :int32, 4
+    optional :max_encounter_player_level, :int32, 5
+  end
+  add_message "POGOProtos.Settings.Master.PokemonSettings" do
+    optional :pokemon_id, :enum, 1, "POGOProtos.Enums.PokemonId"
+    optional :model_scale, :float, 3
+    optional :type, :enum, 4, "POGOProtos.Enums.PokemonType"
+    optional :type_2, :enum, 5, "POGOProtos.Enums.PokemonType"
+    optional :camera, :message, 6, "POGOProtos.Settings.Master.Pokemon.CameraAttributes"
+    optional :encounter, :message, 7, "POGOProtos.Settings.Master.Pokemon.EncounterAttributes"
+    optional :stats, :message, 8, "POGOProtos.Settings.Master.Pokemon.StatsAttributes"
+    repeated :quick_moves, :enum, 9, "POGOProtos.Enums.PokemonMove"
+    repeated :cinematic_moves, :enum, 10, "POGOProtos.Enums.PokemonMove"
+    repeated :animation_time, :float, 11
+    repeated :evolution_ids, :enum, 12, "POGOProtos.Enums.PokemonId"
+    optional :evolution_pips, :int32, 13
+    optional :rarity, :enum, 14, "POGOProtos.Enums.PokemonRarity"
+    optional :pokedex_height_m, :float, 15
+    optional :pokedex_weight_kg, :float, 16
+    optional :parent_pokemon_id, :enum, 17, "POGOProtos.Enums.PokemonId"
+    optional :height_std_dev, :float, 18
+    optional :weight_std_dev, :float, 19
+    optional :km_distance_to_hatch, :float, 20
+    optional :family_id, :enum, 21, "POGOProtos.Enums.PokemonFamilyId"
+    optional :candy_to_evolve, :int32, 22
+  end
+  add_message "POGOProtos.Settings.Master.PokemonUpgradeSettings" do
+    optional :upgrades_per_level, :int32, 1
+    optional :allowed_levels_above_player, :int32, 2
+    repeated :candy_cost, :int32, 3
+    repeated :stardust_cost, :int32, 4
+  end
+  add_message "POGOProtos.Settings.Master.TypeEffectiveSettings" do
+    repeated :attack_scalar, :float, 1
+    optional :attack_type, :enum, 2, "POGOProtos.Enums.PokemonType"
+  end
 end
 
 module POGOProtos
   module Settings
     module Master
-      IapSettings = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Settings.Master.IapSettings").msgclass
-      EquippedBadgeSettings = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Settings.Master.EquippedBadgeSettings").msgclass
-      GymLevelSettings = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Settings.Master.GymLevelSettings").msgclass
-      TypeEffectiveSettings = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Settings.Master.TypeEffectiveSettings").msgclass
-      PokemonSettings = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Settings.Master.PokemonSettings").msgclass
-      GymBattleSettings = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Settings.Master.GymBattleSettings").msgclass
-      MoveSettings = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Settings.Master.MoveSettings").msgclass
-      PokemonUpgradeSettings = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Settings.Master.PokemonUpgradeSettings").msgclass
       BadgeSettings = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Settings.Master.BadgeSettings").msgclass
-      PlayerLevelSettings = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Settings.Master.PlayerLevelSettings").msgclass
-      MoveSequenceSettings = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Settings.Master.MoveSequenceSettings").msgclass
-      IapItemDisplay = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Settings.Master.IapItemDisplay").msgclass
       CameraSettings = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Settings.Master.CameraSettings").msgclass
       EncounterSettings = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Settings.Master.EncounterSettings").msgclass
+      EquippedBadgeSettings = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Settings.Master.EquippedBadgeSettings").msgclass
+      GymBattleSettings = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Settings.Master.GymBattleSettings").msgclass
+      GymLevelSettings = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Settings.Master.GymLevelSettings").msgclass
+      IapItemDisplay = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Settings.Master.IapItemDisplay").msgclass
+      IapSettings = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Settings.Master.IapSettings").msgclass
       ItemSettings = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Settings.Master.ItemSettings").msgclass
+      MoveSequenceSettings = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Settings.Master.MoveSequenceSettings").msgclass
+      MoveSettings = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Settings.Master.MoveSettings").msgclass
+      PlayerLevelSettings = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Settings.Master.PlayerLevelSettings").msgclass
+      PokemonSettings = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Settings.Master.PokemonSettings").msgclass
+      PokemonUpgradeSettings = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Settings.Master.PokemonUpgradeSettings").msgclass
+      TypeEffectiveSettings = Google::Protobuf::DescriptorPool.generated_pool.lookup("POGOProtos.Settings.Master.TypeEffectiveSettings").msgclass
     end
   end
 end
