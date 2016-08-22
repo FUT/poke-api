@@ -31,8 +31,10 @@ module Poke
           raise Errors::LoginFailure.new(@provider, ex)
         end
 
-        initialize_ticket
+        resp = initialize_ticket
         logger.info "[+] Login with #{@provider} Successful"
+
+        resp
       end
 
       def call
